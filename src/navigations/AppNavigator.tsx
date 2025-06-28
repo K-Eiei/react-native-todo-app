@@ -14,6 +14,7 @@ export default function AppNavigator() {
   return (
     <Drawer.Navigator
       initialRouteName="Home"
+      detachInactiveScreens={false}
       screenOptions={{
         headerShown: false,
         drawerType: 'back',
@@ -21,10 +22,10 @@ export default function AppNavigator() {
         drawerPosition: 'left',
         swipeEdgeWidth: screenWidth,
         drawerStyle: {
-          backgroundColor: colorScheme === 'dark' ? '#111' : '#fff',
+          backgroundColor: colorScheme === 'dark' ? '#111' : '#F0F0F0',
         },
         drawerLabelStyle: {
-          color: colorScheme === 'dark' ? '#fff' : '#000',
+          color: colorScheme === 'dark' ? '#F0F0F0' : '#000',
         },
       }}>
       <Drawer.Screen name="Home" component={HomeScreen} />
