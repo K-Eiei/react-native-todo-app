@@ -1,11 +1,10 @@
-import {View, Text, Pressable, Switch, StatusBar} from 'react-native';
+import {View, Text, Pressable} from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withSpring,
-  useAnimatedReaction,
 } from 'react-native-reanimated';
-import {useColorScheme} from 'nativewind';
+import ThemeToggle from '../components/theme-toggle';
 
 const Hstack = () => {
   return (
@@ -19,27 +18,21 @@ const Hstack = () => {
 };
 
 export default function HomeScreen({navigation}: {navigation: any}) {
-  const {colorScheme, toggleColorScheme} = useColorScheme();
-
   const scale = useSharedValue(1);
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{scale: scale.value}],
   }));
 
-  useAnimatedReaction(
-    () => scale.value,
-    (newValue, oldValue) => {
-      console.log('🔁 scale changed from', oldValue, 'to', newValue);
-    },
-    [],
-  );
+  // useAnimatedReaction(
+  //   () => scale.value,
+  //   (newValue, oldValue) => {
+  //     console.log('🔁 scale changed from', oldValue, 'to', newValue);
+  //   },
+  //   [],
+  // );
 
   return (
     <View className="flex-1 items-center justify-center bg-white dark:bg-black">
-      <StatusBar
-        barStyle={colorScheme === 'dark' ? 'light-content' : 'dark-content'}
-      />
-
       <Text className="text-green-400 text-3xl mb-4">Home Screen Jin</Text>
 
       <Pressable
@@ -57,10 +50,9 @@ export default function HomeScreen({navigation}: {navigation: any}) {
             GO TO HELPER
           </Text>
         </Animated.View>
-        <Hstack />
-
-        <Switch value={colorScheme === 'dark'} onChange={toggleColorScheme} />
       </Pressable>
+      <Hstack />
+      <ThemeToggle />
     </View>
   );
 }

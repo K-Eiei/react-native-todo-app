@@ -76,3 +76,5 @@ yarn-error.log
 
 # Other
 README_RenameFix.md
+.nvmrc
+.env
