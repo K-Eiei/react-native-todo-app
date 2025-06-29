@@ -51,6 +51,9 @@ export default function HomeScreen({navigation}: {navigation: any}) {
           </Text>
         </Animated.View>
       </Pressable>
+
+      {/* <Switch  value={true} onValueChange={() => {} } /> */}
+
       <Hstack />
       <ThemeToggle />
     </View>
