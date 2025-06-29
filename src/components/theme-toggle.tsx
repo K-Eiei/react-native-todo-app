@@ -1,8 +1,7 @@
-// components/ThemeToggle.tsx
 import {useColorScheme} from 'nativewind';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, {useEffect} from 'react';
-import {Pressable, View, Text} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Pressable, View, Text, LayoutChangeEvent} from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -15,6 +14,9 @@ export default function ThemeToggle() {
   const isDark = colorScheme === 'dark';
 
   const progress = useSharedValue(isDark ? 0 : 1);
+
+  const [trackWidth, setTrackWidth] = useState(0);
+  const [thumbWidth, setThumbWidth] = useState(0);
 
   useEffect(() => {
     progress.value = withTiming(isDark ? 0 : 1, {duration: 200});
@@ -37,29 +39,44 @@ export default function ThemeToggle() {
   });
 
   const thumbStyle = useAnimatedStyle(() => {
+    // คำนวณระยะที่ thumb เคลื่อนจากซ้ายไปขวาสุด
+    const padding = 2;
+    const maxTranslate = trackWidth - thumbWidth - padding * 2;
     return {
       transform: [
         {
-          translateX: progress.value * 22, // ปรับตำแหน่งตาม progress (จาก 0 → 24)
+          translateX: progress.value * (maxTranslate > 0 ? maxTranslate : 0),
         },
       ],
     };
   });
 
+  const onTrackLayout = (e: LayoutChangeEvent) => {
+    setTrackWidth(e.nativeEvent.layout.width);
+  };
+
+  const onThumbLayout = (e: LayoutChangeEvent) => {
+    setThumbWidth(e.nativeEvent.layout.width);
+  };
+
   return (
     <View className="flex flex-row items-center justify-center gap-2">
-      <Text className="dark:color-white">Dark</Text>
+      <Text className="text-black dark:text-white">Dark</Text>
+
       <Pressable onPress={handleToggle}>
         <Animated.View
+          onLayout={onTrackLayout}
           style={trackStyle}
-          className="w-[52px] h-9 rounded-full p-[2px] justify-center">
+          className="w-[52px] h-9 rounded-full p-[2px] justify-center bg-gray-500">
           <Animated.View
+            onLayout={onThumbLayout}
             style={thumbStyle}
-            className={'w-[26px] h-[27px] rounded-full bg-white'}
+            className="h-[26px] w-[26px] rounded-full bg-white"
           />
         </Animated.View>
       </Pressable>
-      <Text className="dark:color-white">Light</Text>
+
+      <Text className="text-black dark:text-white">Light</Text>
     </View>
   );
 }
