@@ -71,7 +71,7 @@ export default function ThemeToggle() {
           <Animated.View
             onLayout={onThumbLayout}
             style={thumbStyle}
-            className="h-[26px] w-[26px] rounded-full bg-white"
+            className="h-[26px] w-[26px] rounded-full bg-[#f8fafc]"
           />
         </Animated.View>
       </Pressable>

@@ -1,10 +1,14 @@
 import {View, Text, Pressable} from 'react-native';
+import {useState} from 'react';
+import {useColorScheme} from 'nativewind';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withSpring,
 } from 'react-native-reanimated';
 import ThemeToggle from '../components/theme-toggle';
+import AnimatedCheckbox from '../components/animated-checkbox';
+import TaskItem from '../components/task-item';
 
 const Hstack = () => {
   return (
@@ -18,6 +22,8 @@ const Hstack = () => {
 };
 
 export default function HomeScreen({navigation}: {navigation: any}) {
+  const [checked, setChecked] = useState(false);
+  const {colorScheme} = useColorScheme();
   const scale = useSharedValue(1);
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{scale: scale.value}],
@@ -31,8 +37,11 @@ export default function HomeScreen({navigation}: {navigation: any}) {
   //   [],
   // );
 
+  const highlightColor = colorScheme === 'dark' ? '#60a5fa' : '#3b82f6';
+  const boxStroke = colorScheme === 'dark' ? '#737373' : '#d4d4d4';
+
   return (
-    <View className="flex-1 items-center justify-center bg-white dark:bg-black">
+    <View className="flex-1 items-center justify-center bg-[#f8fafc] dark:bg-[#0f172a]">
       <Text className="text-green-400 text-3xl mb-4">Home Screen Jin</Text>
 
       <Pressable
@@ -53,7 +62,26 @@ export default function HomeScreen({navigation}: {navigation: any}) {
       </Pressable>
 
       {/* <Switch  value={true} onValueChange={() => {} } /> */}
-
+      <Pressable onPress={() => setChecked(!checked)}>
+        <View className="w-10 h-10">
+          <AnimatedCheckbox
+            checked={checked} // หรือ false เพื่อเทส
+            checkmarkColor={'white'}
+            highlightColor={highlightColor}
+            boxOutlineColor={boxStroke}
+          />
+        </View>
+      </Pressable>
+      <TaskItem
+        isEditing={true}
+        isDone={checked}
+        subject={'Hello from Task'}
+        onToggleCheckbox={() => setChecked(!checked)}
+        onChangeSubject={text => console.log('change:', text)}
+        onFinishEditing={() => console.log('finish')}
+        onPressLabel={() => console.log('label pressed')}
+        onRemove={() => console.log('remove')}
+      />
       <Hstack />
       <ThemeToggle />
     </View>

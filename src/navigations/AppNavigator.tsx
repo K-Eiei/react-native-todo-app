@@ -1,5 +1,5 @@
 import React from 'react';
-import HomeScreen from '../screens/home';
+import HomeScreen from '../screens/main';
 import HelperScreen from '../screens/helper';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {Dimensions} from 'react-native';
