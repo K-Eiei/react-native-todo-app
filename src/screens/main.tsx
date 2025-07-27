@@ -23,6 +23,8 @@ const Hstack = () => {
 
 export default function HomeScreen({navigation}: {navigation: any}) {
   const [checked, setChecked] = useState(false);
+  const [subject, setSubject] = useState('Task Item');
+  const [isEditing, setIsEditing] = useState(false);
   const {colorScheme} = useColorScheme();
   const scale = useSharedValue(1);
   const animatedStyle = useAnimatedStyle(() => ({
@@ -73,15 +75,16 @@ export default function HomeScreen({navigation}: {navigation: any}) {
         </View>
       </Pressable>
       <TaskItem
-        isEditing={true}
+        isEditing={isEditing}
         isDone={checked}
-        subject={'Hello from Task'}
+        subject={subject}
         onToggleCheckbox={() => setChecked(!checked)}
-        onChangeSubject={text => console.log('change:', text)}
-        onFinishEditing={() => console.log('finish')}
-        onPressLabel={() => console.log('label pressed')}
+        onChangeSubject={setSubject}
+        onFinishEditing={() => setIsEditing(false)}
+        onPressLabel={() => setIsEditing(true)}
         onRemove={() => console.log('remove')}
       />
+
       <Hstack />
       <ThemeToggle />
     </View>

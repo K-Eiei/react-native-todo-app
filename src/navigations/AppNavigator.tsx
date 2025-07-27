@@ -20,7 +20,7 @@ export default function AppNavigator() {
         drawerType: 'back',
         overlayColor: '#00000000',
         drawerPosition: 'left',
-        swipeEdgeWidth: screenWidth,
+        swipeEdgeWidth: screenWidth / 2,
         drawerStyle: {
           backgroundColor: colorScheme === 'dark' ? '#111' : '#F0F0F0',
         },
