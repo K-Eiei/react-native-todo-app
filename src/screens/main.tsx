@@ -1,5 +1,5 @@
 import {View, Text, Pressable} from 'react-native';
-import {useState} from 'react';
+import {useCallback, useState} from 'react';
 import {useColorScheme} from 'nativewind';
 import Animated, {
   useSharedValue,
@@ -42,9 +42,13 @@ export default function HomeScreen({navigation}: {navigation: any}) {
   const highlightColor = colorScheme === 'dark' ? '#60a5fa' : '#3b82f6';
   const boxStroke = colorScheme === 'dark' ? '#737373' : '#d4d4d4';
 
+  const handlePressCheckbox = useCallback(() => {
+    setChecked(prev => !prev);
+  }, []);
+
   return (
     <View className="flex-1 items-center justify-center bg-[#f8fafc] dark:bg-[#0f172a]">
-      <Text className="text-green-400 text-3xl mb-4">Home Screen Jin</Text>
+      <Text className="text-green-400 text-3xl mb-4">Home Screen</Text>
 
       <Pressable
         onPressIn={() => {
@@ -74,11 +78,12 @@ export default function HomeScreen({navigation}: {navigation: any}) {
           />
         </View>
       </Pressable>
+
       <TaskItem
         isEditing={isEditing}
         isDone={checked}
         subject={subject}
-        onToggleCheckbox={() => setChecked(!checked)}
+        onToggleCheckbox={handlePressCheckbox}
         onChangeSubject={setSubject}
         onFinishEditing={() => setIsEditing(false)}
         onPressLabel={() => setIsEditing(true)}

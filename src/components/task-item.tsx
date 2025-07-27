@@ -81,7 +81,7 @@ export default function TaskItem(props: Props) {
 
         {isEditing ? (
           <TextInput
-            className="text-[19px] px-1 py-0 text-black dark:text-white"
+            className="flex-1 text-[19px] px-1 py-0 text-black dark:text-white"
             value={subject}
             placeholder="Task"
             autoFocus
